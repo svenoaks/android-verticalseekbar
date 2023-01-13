@@ -16,28 +16,11 @@
 
 apply plugin: 'com.android.library'
 
-
-ext {
-    // required for 'android-maven-publish.gradle'
-    mavenPublishDestDir = new File(rootDir, "repository").absolutePath
-    mavenPublishDataFile = file('./library-data.properties').absolutePath
-    mavenPublishSigningSetting = file('../signing/library-maven-publish-signing.properties').absolutePath
-}
-
-// Common configurations
-apply from: '../common/android-set-common-properties.gradle'
-
 android {
     defaultConfig {
-        minSdkVersion 14
-        targetSdkVersion 28
-
-
-        def dataProps = new Properties()
-        dataProps.load(project.file(project.mavenPublishDataFile).newDataInputStream())
-
-        versionCode dataProps.VERSION_CODE.toInteger()
-        versionName dataProps.VERSION_NAME
+        compileSdkVersion 33
+        minSdkVersion 21
+        targetSdkVersion 33
     }
     buildTypes {
         release {
@@ -53,11 +36,9 @@ android {
             consumerProguardFiles 'proguard-rules.pro'
         }
     }
+    namespace 'com.h6ah4i.android.widget.verticalseekbar'
 }
 
 dependencies {
-    implementation 'androidx.appcompat:appcompat:1.0.0'
+    implementation 'androidx.appcompat:appcompat:1.6.0'
 }
-
-// NOTE: this line should be place at end of the file
-apply from: '../common/android-maven-publish.gradle'
